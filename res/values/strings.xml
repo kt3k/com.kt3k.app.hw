@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="wait_message">読み込み中</string>
+    <string name="app_name">ハローワーク求人検索</string>
+    <string name="app_screen_name">求人検索</string>
+    <string name="app_home_l">http://192.168.51.1/Dropbox/workdir/Android/workspace/hw/assets/</string>
+    <string name="app_publisher_id">a14f2a8f4f1aa29</string>
+
+</resources>

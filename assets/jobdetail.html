@@ -1,0 +1,525 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=320px" />
+  <meta />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      outline: 0px;
+      border: solid 0px;
+      position: relative;
+    }
+
+    body, html {
+      overflow-x: hidden;
+      background: #B8CCB1;
+    }
+
+    /* generic class definitions */
+
+    .fontSmall {
+        font-size: small;
+    }
+
+    .fontXSmall {
+    	font-size: x-small;
+    }
+
+    .fontGray {
+    	color: hsl(0, 0%, 10%);
+    }
+
+    /* division specific definitions */
+
+    #header, #footer {
+      color: hsl(105, 65%, 30%);
+      text-align: center;
+      font-weight: bold;
+      text-shadow: 0px 0px 2px hsl(105,13%,80%);
+      z-index: 10;
+
+      background: rgb(230,255,221); /* Old browsers */
+      background: -moz-linear-gradient(top,  rgba(230,255,221,1) 0%, rgba(184,204,177,1) 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(230,255,221,1)), color-stop(100%,rgba(184,204,177,1))); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top,  rgba(230,255,221,1) 0%,rgba(184,204,177,1) 100%); /* Chrome10+,Safari5.1+ */
+      background: linear-gradient(top,  rgba(230,255,221,1) 0%,rgba(184,204,177,1) 100%); /* W3C */
+      
+    }
+
+    #header {
+      width: 100%;
+      height: 45px;
+      line-height: 45px;
+      box-shadow: 0px 2px 2px hsl(105,40%,30%);
+
+    }
+
+    /* main field specific */
+
+    #main {
+      z-index: 0;
+      background: hsl(105,30%,90%);
+      padding: 15px 5px 15px 5px;
+    }
+
+    /* job sheet specific */
+    /* search sheet specific */
+
+    #jobSheet {
+      line-height: 1.8;
+      background: hsl(70,55%,90%);
+      border-radius: 10px;
+      border: solid 0px black;
+      box-shadow: 0px 0px 5px hsl(105,40%,30%);
+      z-index: 1;
+    }
+
+    #jobSheet div.topFloat {
+      z-index: 3;
+      padding: 5px 10px 5px 10px;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    #jobSheet ul li div.item {
+      z-index: 2;
+      padding: 5px 10px 5px 10px;
+      border-bottom: solid 1px hsl(105,40%,65%);
+    }
+
+    #jobSheet ul li div.item div {
+      z-index: 2;
+      padding: 5px 10px 5px 10px;
+      border-bottom: solid 1px hsl(165,40%,65%);
+    }
+
+    #jobSheet ul li div.item div:last-child {
+      border-bottom: solid 0px white;
+    }
+
+    #jobSheet ul li:first-child div.item {
+      padding-top: 5px
+    }
+
+    #jobSheet ul li:last-child div.item {
+      padding-bottom: 5px;
+      border-bottom: 0px;
+    }
+
+    #jobSheet .cellTitle {
+      border-radius: 4px;
+      padding: 5px 5px 2px 5px;
+      font-size: small;
+      background-color: #ebb;
+      background-color: hsl(105,40%,80%);
+      color: #411;
+      color: hsl(105,90%,10%);
+    }
+
+    #jobSheet .buttonLabel {
+      color: hsl(105,90%,10%);
+
+      background: hsl(105,60%,80%);
+      box-shadow: 0px 0px 3px hsl(45,30%,45%);
+      margin-top: 5px;
+      margin-bottom: 5px;
+
+      background: rgb(230,255,221); /* Old browsers */
+      background: -moz-linear-gradient(top,  rgba(230,255,221,1) 0%, rgba(184,204,177,1) 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(230,255,221,1)), color-stop(100%,rgba(184,204,177,1))); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top,  rgba(230,255,221,1) 0%,rgba(184,204,177,1) 100%); /* Chrome10+,Safari5.1+ */
+      background: linear-gradient(top,  rgba(230,255,221,1) 0%,rgba(184,204,177,1) 100%); /* W3C */  
+        
+    }
+
+    #jobSheet .buttonLabel {
+      border-radius: 5px;
+      padding: 8px 5px 8px 5px;
+      line-height: 1.8;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .width150 {
+      width: 150px;
+    }
+
+    .width200 {
+      width: 200px;
+    }
+
+
+    /* footer specific */
+
+    #footer {
+        width: 100%;
+        height: 45px;
+        line-height: 45px;
+        box-shadow: 0px -1px 1px hsl(105,40%,30%);
+    }
+  </style>
+  <script type="text/javascript" src="./js/jquery.min.js"></script>
+  <script type="text/javascript" src="./js/storage.js"></script>
+  <script type="text/javascript">
+/** globals */
+
+var json = null;
+
+/** constants **/
+
+var apiUrl = 'https://www.hellowork.go.jp/servicef/130050.do';
+//var apiUrl = device.getHome() + '130050.html';
+
+/** utils **/
+
+var byId = function(id) {
+  return document.getElementById(id);
+};
+
+var makeTag = function(tagName) {
+  return document.createElement(tagName);
+};
+
+/** data persistence **/
+
+if (String.prototype.trim  == null) {
+  String.prototype.trim = function() {
+    return this.replace(/^\s*|\s*$/g, '');
+  };
+}
+
+var theJob = {};
+var reNumber = /求人番号/;
+var reJobName = /職種/;
+var reEmploymentType = /雇用形態/;
+var rePlace = /就業場所/;
+var reAcceptDate = /受理日/;
+
+var storeJobData = function(key, value) {
+  if (reNumber.test(key)) {
+    theJob.number = value.trim();
+  } else if (reJobName.test(key)) {
+    theJob.name = value.trim();
+  } else if (reEmploymentType.test(key)) {
+    theJob.employmentType = value.trim();
+  //} else if (rePlace.test(key)) {
+  //  theJob.place = value.trim();
+  } else if (reAcceptDate.test(key)) {
+    theJob.acceptDate = value.trim();
+  }
+};
+
+/** dom operation **/
+
+var reAgeLimit = /年齢制限の理由/;
+var reIncome = /賃金/;
+var reWorkTime = /就業時間/;
+var reIsEmpty = /^\s*$/;
+
+
+var makeTimeHTML = function(td) {
+  var divs = td.getElementsByTagName('div');
+  var buf = [];
+  for (var i = 0; i < divs.length; i ++) {
+    var div = divs[i];
+    buf.push(div.textContent);
+  }
+  return buf.join('<br />');
+};
+
+
+var toArray = function(nodelist) {
+  var array = new Array(nodelist.length);
+  for (var i = 0; i < nodelist.length; i ++) {
+    array[i] = nodelist[i];
+  }
+  return array;
+};
+
+
+var makeIncomeHTML = function(td) {
+  var tables = td.getElementsByTagName('table');
+  if (tables.length > 0) {
+    var rows = toArray(tables[0].getElementsByTagName('tr'));
+
+    var schools = rows.shift();
+    schools = toArray(schools.getElementsByTagName('th'));
+
+    schools.shift(); // discard top left cell, cuz it's meaningless.
+
+    schools = schools.map(function(x) {
+      return {name: x.textContent, payments: []};
+    });
+
+    var reWhitespace = /^\s*$/;
+
+    for (var i = 0; i < rows.length; i ++) {
+      var row = rows[i];
+      var category = row.getElementsByTagName('th')[0].textContent;
+      var cells = toArray(row.getElementsByTagName('td'));
+      for (var j = 0; j < cells.length; j ++) {
+        var cell = cells[j];
+        var value = cell.textContent;
+        if (!reWhitespace.test(value)) {
+          schools[j].payments.push({
+            category: category,
+            value: value
+          });
+        }
+      }
+    }
+
+    var html = '';
+    for (var i = 0; i < schools.length; i ++) {
+      var school = schools[i];
+      var payments = school.payments;
+      if (payments.length > 0) {
+        html += '<div><p><span class="cellTitle">' + school.name + '</span></p>';
+
+        for (var j = 0; j < payments.length; j++) {
+          var payment = payments[j];
+          html += '<p>' + payment.category + ': ' + payment.value + '</p>';
+        }
+
+        html += '</div>';
+      }
+    }
+    return html;
+  } else {
+    return td.innerHTML;
+  }
+};
+
+var makeRegionHTML = function(td) {
+  var regions = getTextList(td.getElementsByTagName('div')[0]);
+  return regions.join(' / ');
+};
+
+var reWhitespaceOnly = /^\s*$/;
+
+var getTextList = function(elem) {
+  var buf = [];
+  var nodes = elem.childNodes;
+  for (var i = 0; i < nodes.length; i ++) {
+    var node = nodes[i];
+    if (node instanceof Text) {
+      node = node.textContent;
+      if (reWhitespaceOnly.test(node)) {
+        continue;
+      }
+      buf.push(node);
+    }
+  }
+  return buf;
+};
+
+var makeItemHTML = function(row) {
+  var th = row.getElementsByTagName('th')[0];
+  var td = row.getElementsByTagName('td')[0];
+
+  var label = th != null ? th.innerHTML : '';
+
+  if (reAgeLimit.test(label)) {
+    return '';
+  }
+
+  var isIncome = false;
+  if (reIncome.test(label)) {
+    label = '賃金';
+    isIncome = true;
+  }
+
+  var value;
+  if (reWorkTime.test(label)) {
+    value = td != null ? makeTimeHTML(td) : '';
+  } else if (isIncome) {
+    value = td != null ? makeIncomeHTML(td) : '';
+  } else if (/就業場所/.test(label)) {
+    value = td != null ? makeRegionHTML(td) : '';
+  } else {
+    value = td != null ? td.textContent : '';
+  }
+
+  if (reIsEmpty.test(value)) {
+    return '';
+  }
+
+  storeJobData(label, value);
+
+  var html = '';
+  html += '<li><div class="item">';
+  html += '<p><span class="cellTitle">' + label + '</span></p>';
+  html += '' + value + '';
+  html += '</div></li>';
+  return html;
+};
+
+
+var makeJobSheetHTML = function(table) {
+  var html = '';
+
+  if (!json.loadingFromCache) {
+    html += '<div class="topFloat" style=""><span class="buttonLabel saveButton">保存する</span></div>';
+  }
+
+  html += '<ul>';
+
+  var rows = table.getElementsByTagName('tr');
+  for (var i = 0; i < rows.length; i ++) {
+    var row = rows[i];
+    if (row.parentElement.parentElement !== table) {
+      continue;
+    }
+    html += makeItemHTML(row);
+  }
+
+  if (!json.loadingFromCache) {
+    html += '<li><div style="text-align: center; z-index: 3;"><span class="buttonLabel saveButton">保存する</span></div></li>';
+  }
+
+  html += '</ul>';
+  return html;
+};
+
+
+var bindClickEvent = function() {
+  $('.saveButton').each(function() {
+    this.addEventListener('click', function() {
+      if (job.has(theJob)) {
+        device.toast('既に保存しています。');
+      } else {
+        theJob.income = json.income;
+        theJob.place = json.region;
+        job.add(theJob);
+        device.toast('保存しました。');
+      }
+    });
+  });  
+};
+
+
+/** api request **/
+
+var getTableFromHTML = function(pageSource) {
+  var div = makeTag('div');
+  div.innerHTML = pageSource;
+
+  var tables = div.getElementsByTagName('table');
+  var table = tables[0];
+  return table;
+}
+
+
+var gotJobDetail = function(pageSource) {
+  var table = getTableFromHTML(pageSource);
+
+  theJob.table = (new XMLSerializer).serializeToString(table);
+  //device.log('theJob.table.length = ' + theJob.table.length);
+  theJob.table = theJob.table.replace(/\s+/g, ' ');
+  theJob.table = theJob.table.replace(/ [a-z]+="[^"]*"/g, '');
+  //device.log('theJob.table.length = ' + theJob.table.length);
+
+  var html = makeJobSheetHTML(table);
+
+  byId('jobSheet').innerHTML = html;
+
+  bindClickEvent();
+};
+
+var errorJobDetailRequest = function() {
+  device.alert('求人検索', 'インターネットに接続できませんでした。時間を置いて再度お試しください。', 'device.finish');
+};
+
+
+var requestJobDetail = function(data) {
+  var params = '?';
+  for (var i in data) {
+    if (data.hasOwnProperty(i)) {
+      params += '' + i + '=' + encodeURIComponent(data[i]) + '&';
+    }
+  }
+
+  device.httpGet(apiUrl + params, 'gotJobDetail', 'errorJobDetailRequest');
+};
+
+
+var loadSavedJobDetail = function(number) {
+  var tableSource = job.get(number).table;
+
+  var table = getTableFromHTML(tableSource);
+
+  var html = makeJobSheetHTML(table);
+
+  byId('jobSheet').innerHTML = html;
+}
+
+
+/** init **/
+var setUpOptionsMenu = function(json) {
+  device.clearOptionsMenu();
+
+  device.addOptionMenu('戻る', 'device.finish');
+  if (!json.loadingFromCache) {
+    device.addOptionMenu('保存リスト', 'function(){device.openUrl(device.getHome() + "savedjobs.html");}');
+  }
+  device.addOptionMenu('ハローワークを探す', 'function(){device.openUrl(device.getHome() + "findhw.html");}');
+  device.addOptionMenu('アプリについて', 'function(){device.openUrl(device.getHome() + "about.html");}');
+};
+
+
+var getExtraJSON = function() {
+  try {
+    json = JSON.parse(device.getJSONString());
+  } catch (e) {
+    json = {};
+  }
+  return json;
+};
+
+
+var init = function() {
+  json = getExtraJSON();
+
+  setUpOptionsMenu(json);
+
+  if (json.loadingFromCache) {
+    loadSavedJobDetail(json.number);
+    $('#headerTitle').html('求人詳細 (保存データ)');
+  } else {
+    requestJobDetail(json);
+  }
+};
+
+
+/*
+$(function() {
+  init();
+});
+*/
+  </script>
+</head>
+<body onload="init();">
+<div id="container">
+  <div id="header">
+    <span id="headerTitle">求人詳細</span>
+    <h6 style="position: absolute; right: 0; top: 0; font-size: x-small; line-height: 45px;"><a href="javascript:void(0);" onclick="device.openOptionsMenu();" style="display: block; padding: 0 10px 0 10px;">MENU</a></h6>
+  </div>
+  <div id="main">
+    <div id="jobSheet">
+      <p style="text-align: center;">
+        <img src="./images/ajax-loader-yellow.gif" />
+      </p>
+    </div>
+  </div>
+  <div id="footer">
+    manufactured by app.kt3k.com
+  </div>
+</div>
+</body>
+</html>
+
+
