@@ -71,7 +71,6 @@
     }
 
     #searchResult ul {
-      visibility: hidden;
     }
 
     #searchResult ul li div, #searchResultBottom {
@@ -322,13 +321,13 @@ var gotSearchList = function(pageSource) {
   fillCounts(total);
 
   var s = byId('searchResult');
-  s.style.webkitTransform = 'translate(0px,500px)';
+  //s.style.webkitTransform = 'translate(0px,500px)';
 
   setTimeout(function() {
     s.innerHTML = '<ul>' + html + '</ul>';
     setTimeout(function() {
-      $('#searchResult ul').css('visibility', 'visible');
-      s.style.webkitTransform = 'translate(0px,0px)';
+      //$('#searchResult ul').css('visibility', 'visible');
+      //s.style.webkitTransform = 'translate(0px,0px)';
       initJobDetailLink();
     }, 0);
   }, 0);
@@ -472,7 +471,7 @@ $(function() {
       (<span class="currentPage">1</span> / <span class="totalPage">-</span>)
       <a href="#" onclick="searchForward(); return false;">次へ</a>
     </p>
-    <div id="searchResult" style="-webkit-transition-duration: 800ms; z-index: 100; -webkit-backface-visibility: hidden; -webkit-transform-style: preserve-3d;">
+    <div id="searchResult" style="-webkit-transition-duration: 800ms; z-index: 100; ">
       <p style="text-align: center;">
         <br />
         <img src="./images/ajax-loader-green.gif" />
