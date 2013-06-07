@@ -1,0 +1,8 @@
+bin/classes/
+bin/classes.dex
+bin/classes.dex.d
+*.apk
+*.ap_
+*.apk.d
+*.ap_.d
+.DS_Store
