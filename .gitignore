@@ -1,6 +1,5 @@
 bin/classes/
 bin/classes.dex
-bin/classes.dex.d
 *.apk
 *.ap_
 *.d
