@@ -3,11 +3,11 @@ debug: build.xml
 	ant debug
 
 .PHONY: unsigned-release
-unsigned-release:
+unsigned-release: build.xml
 	ant release
 
 .PHONY: release
-release:
+release: build.xml
 	cat .password | ant release
 
 build.xml:
