@@ -4,7 +4,7 @@ debug: build.xml
 
 .PHONY: release
 release: build.xml
-	cat .password | ant release
+	ant release
 
 build.xml:
 	android update project -p ./
