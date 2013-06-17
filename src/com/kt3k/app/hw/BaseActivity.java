@@ -35,13 +35,10 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -275,34 +272,6 @@ public class BaseActivity extends Activity {
 		super.onDestroy();
 	}
 
-
-	public class MyDBHelper extends SQLiteOpenHelper {
-		public MyDBHelper(Context context) {
-			super(context, null, null, 1);
-		}
-
-		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		}
-
-		@Override
-		public void onCreate(SQLiteDatabase db) {
-			// table create
-			db.execSQL(
-					"create table notes("+
-							"   id integer primary key autoincrement,"+
-							"   title text null,"+
-							"   html text null"+
-							");"
-					);
-
-			// table row insert
-			db.execSQL("insert into products(name,price) values ('Cookie', 120);");
-			db.execSQL("insert into products(name,price) values ('Candy', 85);");
-			db.execSQL("insert into products(name,price) values ('Cake', 285);");
-		}
-	}
-
 	class CustomWebViewClient extends WebViewClient {
 		private ProgressDialog dialog;
 
@@ -374,7 +343,7 @@ public class BaseActivity extends Activity {
 		public final String	label;
 		public final String callback;
 
-		public OptionMenuItem( int id, final String label, final String func ) {
+		public OptionMenuItem(int id, final String label, final String func) {
 			this.id = id;
 			this.label = label;
 			this.callback = func;
