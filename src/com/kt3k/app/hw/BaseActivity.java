@@ -409,13 +409,6 @@ public class BaseActivity extends Activity {
 			});
 		}
 
-		// うまく動かないので削除
-		/*public void injectJSON() {
-	        if (extraJSON != null && !"".equals(extraJSON)) {
-	        	jsExec("function(){setTimeout(function(){window.json = JSON.parse(device.getJSONString());}, 60);}");
-	        }
-		}*/
-
 		private void jsListExec(final List<String> jsList) {
 			for (String code: jsList) {
 				jsExec(code);
