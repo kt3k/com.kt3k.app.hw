@@ -7,7 +7,7 @@ release: build.xml
 	ant release
 
 build.xml:
-	android update project -p ./
+	android update project -p ./ --name 'hw'
 
 .PHONY: clean
 clean: build.xml
