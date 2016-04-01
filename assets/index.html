@@ -183,7 +183,7 @@ var getParamsFromForm = function() {
     kiboShokushu: $('input[name="kiboShokushu"]').val(),
 
     todofuken: $('input[name="todofuken"]').val(),
-    chiku: $('input[name="chiku"]').val(),
+    chiku1: $('input[name="chiku1"]').val(),
 
     nenrei: $('input[name="nenrei"]').val(),
     shinchakuKyujin: $('input[name="shinchakuKyujin"]:checked').val(),
@@ -233,7 +233,7 @@ var restoreFormByJSON = function(json) {
 
   onPrefectureSelect(indexOf(prefectureTypes, json.todofuken));
 
-  onChikuEdit(json.chiku);
+  onChiku1Edit(json.chiku1);
 
   onAgeEdit(normNum(json.nenrei));
   $('input[name="shinchakuKyujin"]').val([json.shinchakuKyujin]);
@@ -462,17 +462,17 @@ var textEditDialog = function(title, idInput, callbackName) {
   }
 };
 
-var chikuEditHandler = function() {
-  return textEditHandler('#inputChiku', '#chiku', '地区を入力 (50文字以内)');
+var chiku1EditHandler = function() {
+  return textEditHandler('#inputChiku1', '#chiku1', '地区を入力 (50文字以内)');
 }
 
-var chikuEditDialog = function() {
-  return textEditDialog('地区を入力(空白で区切って複数入力可)', 'chiku', 'onChikuEdit');
+var chiku1EditDialog = function() {
+  return textEditDialog('地区を入力(空白で区切って複数入力可)', 'chiku1', 'onChiku1Edit');
 }
 
-var onChikuEdit = chikuEditHandler();
+var onChiku1Edit = chiku1EditHandler();
 
-var showChikuEdit = chikuEditDialog();
+var showChiku1Edit = chiku1EditDialog();
 
 /* on result */
 
@@ -502,7 +502,7 @@ var setUpUIs = function() {
   $("#companyType").bind('click', showCompanyTypeSelect);
   $("#educationType").bind('click', showEducationTypeSelect);
   $('#prefecture').bind('click', showPrefectureSelect);
-  $('#chiku').bind('click', showChikuEdit);
+  $('#chiku1').bind('click', showChiku1Edit);
   $("#monthIncome").bind('click', showMonthIncomeEdit);
   $("#timeIncome").bind('click', showTimeIncomeEdit);
   $("#age").bind('click', showAgeEdit);
@@ -605,8 +605,8 @@ $(function() {
             都道府県：&nbsp;&nbsp;<span class="buttonLabel" id="prefecture" style="width: 150px;">選択なし</span>
             <input type="hidden" id="inputPrefecture" name="todofuken" />
             <br />
-            地区１：&nbsp;&nbsp;<span class="buttonLabel" id="chiku" style="min-width: 150px;">地区を入力 (50文字以内)</span>
-            <input type="hidden" id="inputChiku" name="chiku" />
+            地区：&nbsp;&nbsp;<span class="buttonLabel" id="chiku1" style="min-width: 150px;">地区を入力 (50文字以内)</span>
+            <input type="hidden" id="inputChiku1" name="chiku1" />
             <br />
             <p class="annotation">複数地区を指定する場合は、市区町村名を空白で区切って入力してください。</p>
           </div>
