@@ -1,10 +1,7 @@
-HW
---
+# HW
 
-HW means "Hello Work", which is the public employment service of Japan.
+> The viewer app of www.hellowork.go.jp.
 
-HW provide functionality to search "Hello Work" on Android devices.
-
-the market page is:
+It can also save the search result.
 
 https://play.google.com/store/apps/details?id=com.kt3k.app.hw
