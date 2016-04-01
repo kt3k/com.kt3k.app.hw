@@ -24,4 +24,4 @@ device-app-launch:
 	adb shell am start -n com.kt3k.app.hw/com.kt3k.app.hw.BaseActivity
 
 device-logcat:
-	adb logcat *:E
+	adb logcat -s *:E chromium
