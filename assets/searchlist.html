@@ -311,7 +311,7 @@ var gotSearchList = function(pageSource) {
   var html = '';
   var ts = d.getElementsByTagName('table');
   if (ts.length >= 2) {
-    html += parseSearchResult(ts[1]);
+    html += parseSearchResult(ts[ts.length - 1]);
   } else {
     $('.currentPage').text('0');
     html += noResult();
