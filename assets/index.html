@@ -182,16 +182,8 @@ var getParamsFromForm = function() {
     jikyuKagen: $('input[name="jikyuKagen"]').val(),
     kiboShokushu: $('input[name="kiboShokushu"]').val(),
 
-    todofuken1: $('input[name="todofuken1"]').val(),
-    todofuken2: $('input[name="todofuken2"]').val(),
-    todofuken3: $('input[name="todofuken3"]').val(),
-    todofuken4: $('input[name="todofuken4"]').val(),
-    todofuken5: $('input[name="todofuken5"]').val(),
-    chiku1: $('input[name="chiku1"]').val(),
-    chiku2: $('input[name="chiku2"]').val(),
-    chiku3: $('input[name="chiku3"]').val(),
-    chiku4: $('input[name="chiku4"]').val(),
-    chiku5: $('input[name="chiku5"]').val(),
+    todofuken: $('input[name="todofuken"]').val(),
+    chiku: $('input[name="chiku"]').val(),
 
     nenrei: $('input[name="nenrei"]').val(),
     shinchakuKyujin: $('input[name="shinchakuKyujin"]:checked').val(),
@@ -239,17 +231,9 @@ var restoreFormByJSON = function(json) {
 
   onJobTypeSelect(indexOf(jobTypes, json.kiboShokushu));
 
-  onPrefecture1Select(indexOf(prefectureTypes, json.todofuken1));
-  onPrefecture2Select(indexOf(prefectureTypes, json.todofuken2));
-  onPrefecture3Select(indexOf(prefectureTypes, json.todofuken3));
-  onPrefecture4Select(indexOf(prefectureTypes, json.todofuken4));
-  onPrefecture5Select(indexOf(prefectureTypes, json.todofuken5));
+  onPrefectureSelect(indexOf(prefectureTypes, json.todofuken));
 
-  onChiku1Edit(json.chiku1);
-  onChiku2Edit(json.chiku2);
-  onChiku3Edit(json.chiku3);
-  onChiku4Edit(json.chiku4);
-  onChiku5Edit(json.chiku5);
+  onChikuEdit(json.chiku);
 
   onAgeEdit(normNum(json.nenrei));
   $('input[name="shinchakuKyujin"]').val([json.shinchakuKyujin]);
@@ -259,15 +243,6 @@ var restoreFormByJSON = function(json) {
   onEducationTypeSelect(indexOf(educationTypes, json.saishuGakureki));
   $('input[name="zennendoSotsugyo"]').val([json.zennendoSotsugyo]);
 
-  var nep2 = nonEmpty(json.todofuken2),
-      nep3 = nonEmpty(json.todofuken3),
-      nep4 = nonEmpty(json.todofuken4),
-      nep5 = nonEmpty(json.todofuken5);
-  if (nep2) { $('.prefectureControl').has('#prefecture2').css('display', 'block'); }
-  if (nep3) { $('.prefectureControl').has('#prefecture3').css('display', 'block'); }
-  if (nep4) { $('.prefectureControl').has('#prefecture4').css('display', 'block'); }
-  if (nep5) { $('.prefectureControl').has('#prefecture5').css('display', 'block'); }
-  if (nep2 && nep3 && nep4 && nep5) { $('.prefectureOpenControl').css('display', 'none'); }
 };
 
 var submitSearch = function() {
@@ -387,25 +362,17 @@ var onEducationTypeSelect = selectHandler('#inputEducationType', educationTypes,
 
 var showEducationTypeSelect = selectDialog('最終学歴', 'saishuGakureki', educationTypes, educationTypeLabels, 'onEducationTypeSelect');
 
-var prefectureSelectHandler = function(no) {
-  return selectHandler('#inputPrefecture' + no, prefectureTypes, '#prefecture' + no, prefectureTypeLabels);
+var prefectureSelectHandler = function() {
+  return selectHandler('#inputPrefecture', prefectureTypes, '#prefecture', prefectureTypeLabels);
 };
 
-var onPrefecture1Select = prefectureSelectHandler(1);
-var onPrefecture2Select = prefectureSelectHandler(2);
-var onPrefecture3Select = prefectureSelectHandler(3);
-var onPrefecture4Select = prefectureSelectHandler(4);
-var onPrefecture5Select = prefectureSelectHandler(5);
+var onPrefectureSelect = prefectureSelectHandler();
 
-var selectPrefectureDialog = function(no) {
-  return selectDialog('都道府県を選択', 'todofuken' + no, prefectureTypes, prefectureTypeLabels, 'onPrefecture' + no + 'Select');
+var selectPrefectureDialog = function() {
+  return selectDialog('都道府県を選択', 'todofuken', prefectureTypes, prefectureTypeLabels, 'onPrefectureSelect');
 };
 
-var showPrefecture1Select = selectPrefectureDialog(1);
-var showPrefecture2Select = selectPrefectureDialog(2);
-var showPrefecture3Select = selectPrefectureDialog(3);
-var showPrefecture4Select = selectPrefectureDialog(4);
-var showPrefecture5Select = selectPrefectureDialog(5);
+var showPrefectureSelect = selectPrefectureDialog();
 
 /* num edits */
 
@@ -495,25 +462,17 @@ var textEditDialog = function(title, idInput, callbackName) {
   }
 };
 
-var chikuEditHandler = function(no) {
-  return textEditHandler('#inputChiku' + no, '#chiku' + no, '地区を入力 (50文字以内)');
+var chikuEditHandler = function() {
+  return textEditHandler('#inputChiku', '#chiku', '地区を入力 (50文字以内)');
 }
 
-var chikuEditDialog = function(no) {
-  return textEditDialog('地区を入力(空白で区切って複数入力可)', 'chiku' + no, 'onChiku' + no + 'Edit');
+var chikuEditDialog = function() {
+  return textEditDialog('地区を入力(空白で区切って複数入力可)', 'chiku', 'onChikuEdit');
 }
 
-var onChiku1Edit = chikuEditHandler(1);
-var onChiku2Edit = chikuEditHandler(2);
-var onChiku3Edit = chikuEditHandler(3);
-var onChiku4Edit = chikuEditHandler(4);
-var onChiku5Edit = chikuEditHandler(5);
+var onChikuEdit = chikuEditHandler();
 
-var showChiku1Edit = chikuEditDialog(1);
-var showChiku2Edit = chikuEditDialog(2);
-var showChiku3Edit = chikuEditDialog(3);
-var showChiku4Edit = chikuEditDialog(4);
-var showChiku5Edit = chikuEditDialog(5);
+var showChikuEdit = chikuEditDialog();
 
 /* on result */
 
@@ -542,16 +501,8 @@ var setUpUIs = function() {
   $("#jobType").bind('click', showJobTypeSelect);
   $("#companyType").bind('click', showCompanyTypeSelect);
   $("#educationType").bind('click', showEducationTypeSelect);
-  $('#prefecture1').bind('click', showPrefecture1Select);
-  $('#prefecture2').bind('click', showPrefecture2Select);
-  $('#prefecture3').bind('click', showPrefecture3Select);
-  $('#prefecture4').bind('click', showPrefecture4Select);
-  $('#prefecture5').bind('click', showPrefecture5Select);
-  $('#chiku1').bind('click', showChiku1Edit);
-  $('#chiku2').bind('click', showChiku2Edit);
-  $('#chiku3').bind('click', showChiku3Edit);
-  $('#chiku4').bind('click', showChiku4Edit);
-  $('#chiku5').bind('click', showChiku5Edit);
+  $('#prefecture').bind('click', showPrefectureSelect);
+  $('#chiku').bind('click', showChikuEdit);
   $("#monthIncome").bind('click', showMonthIncomeEdit);
   $("#timeIncome").bind('click', showTimeIncomeEdit);
   $("#age").bind('click', showAgeEdit);
@@ -651,59 +602,13 @@ $(function() {
         </li>
         <li class="prefectureControl" style="display: block;">
           <div>
-            都道府県１：&nbsp;&nbsp;<span class="buttonLabel" id="prefecture1" style="width: 150px;">選択なし</span>
-            <input type="hidden" id="inputPrefecture1" name="todofuken1" />
+            都道府県：&nbsp;&nbsp;<span class="buttonLabel" id="prefecture" style="width: 150px;">選択なし</span>
+            <input type="hidden" id="inputPrefecture" name="todofuken" />
             <br />
-            地区１：&nbsp;&nbsp;<span class="buttonLabel" id="chiku1" style="min-width: 150px;">地区を入力 (50文字以内)</span>
-            <input type="hidden" id="inputChiku1" name="chiku1" />
+            地区１：&nbsp;&nbsp;<span class="buttonLabel" id="chiku" style="min-width: 150px;">地区を入力 (50文字以内)</span>
+            <input type="hidden" id="inputChiku" name="chiku" />
             <br />
             <p class="annotation">複数地区を指定する場合は、市区町村名を空白で区切って入力してください。</p>
-          </div>
-        </li>
-        <li class="prefectureControl" style="display: none;">
-          <div>
-            都道府県２：&nbsp;&nbsp;<span class="buttonLabel" id="prefecture2" style="width: 150px;">選択なし</span>
-            <input type="hidden" id="inputPrefecture2" name="todofuken2" />
-            <br />
-            地区２：&nbsp;&nbsp;<span class="buttonLabel" id="chiku2" style="min-width: 150px;">地区を入力 (50文字以内)</span>
-            <input type="hidden" id="inputChiku2" name="chiku2" />
-            <br />
-          </div>
-        </li>
-        <li class="prefectureControl" style="display: none;">
-          <div>
-            都道府県３：&nbsp;&nbsp;<span class="buttonLabel" id="prefecture3" style="width: 150px;">選択なし</span>
-            <input type="hidden" id="inputPrefecture3" name="todofuken3" />
-            <br />
-            地区３：&nbsp;&nbsp;<span class="buttonLabel" id="chiku3" style="min-width: 150px;">地区を入力 (50文字以内)</span>
-            <input type="hidden" id="inputChiku3" name="chiku3" />
-            <br />
-          </div>
-        </li>
-        <li class="prefectureControl" style="display: none;">
-          <div>
-            都道府県４：&nbsp;&nbsp;<span class="buttonLabel" id="prefecture4" style="width: 150px;">選択なし</span>
-            <input type="hidden" id="inputPrefecture4" name="todofuken4" />
-            <br />
-            地区４：&nbsp;&nbsp;<span class="buttonLabel" id="chiku4" style="min-width: 150px;">地区を入力 (50文字以内)</span>
-            <input type="hidden" id="inputChiku4" name="chiku4" />
-            <br />
-          </div>
-        </li>
-        <li class="prefectureControl" style="display: none;">
-          <div>
-            都道府県５：&nbsp;&nbsp;<span class="buttonLabel" id="prefecture5" style="width: 150px;">選択なし</span>
-            <input type="hidden" id="inputPrefecture5" name="todofuken5" />
-            <br />
-            地区５：&nbsp;&nbsp;<span class="buttonLabel" id="chiku5" style="min-width: 150px;">地区を入力 (50文字以内)</span>
-            <input type="hidden" id="inputChiku5" name="chiku5" />
-            <br />
-            <p class="annotation">希望する就業場所の都道府県を５つまで指定できます。</p>
-          </div>
-        </li>
-        <li class="prefectureOpenControl">
-          <div style="text-align: center;">
-            <span class="buttonLabel prefectureOpenButton">地域を追加する</span>
           </div>
         </li>
         <li class="monthIncomeControl">

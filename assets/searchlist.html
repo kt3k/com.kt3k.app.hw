@@ -397,9 +397,11 @@ var requestSearchList = function(pageNumber) {
     pageNumber = 1;
   }
 
-  params += "screenId=130050&xab_vrbs=detailJokenDispButton%2CcommonNextScreen%2CdetailJokenChangeButton%2CcommonDetailInfo&fwListNaviBtn1=1&fwListNowPage=1&fwListLeftPage=" + pageNumber + "&fwListNaviCount=1000000&";
+  params += "screenId=130050&commonSearch=&xab_vrbs=&fwListNaviBtn1=1&fwListNowPage=1&fwListLeftPage=" + pageNumber + "&fwListNaviCount=1000000&";
 
   var reqUrl = apiUrl + params;
+
+  console.log(reqUrl);
   setTimeout(function() {
     device.httpGet(reqUrl, 'gotSearchList', 'errorSearch');
   }, 0);
