@@ -205,24 +205,22 @@ var labelAssign = function(key, values, labels) {
 
 var itemHtml = function(data) {
   data.kyujinShurui = labelAssign(data.kyujinShurui, workTypes, workTypeLabels);
-  data.kiboShokushu = labelAssign(data.kiboShokushu, jobTypes, jobTypeLabels);
-  data.kiboSangyo = labelAssign(data.kiboSangyo, companyTypes, companyTypeLabels);
-  data.todofuken1 = labelAssign(data.todofuken1, prefectureTypes, prefectureTypeLabels);
-  data.todofuken2 = labelAssign(data.todofuken2, prefectureTypes, prefectureTypeLabels);
-  data.todofuken3 = labelAssign(data.todofuken3, prefectureTypes, prefectureTypeLabels);
-  data.todofuken4 = labelAssign(data.todofuken4, prefectureTypes, prefectureTypeLabels);
-  data.todofuken5 = labelAssign(data.todofuken5, prefectureTypes, prefectureTypeLabels);
+  data.kiboShokushu1 = labelAssign(data.kiboShokushu1, jobTypes, jobTypeLabels);
+  data.kiboSangyo1 = labelAssign(data.kiboSangyo1, companyTypes, companyTypeLabels);
+  data.todofuken = labelAssign(data.todofuken, prefectureTypes, prefectureTypeLabels);
 
   data.gekkyuKagenComma = digit3Comma(data.gekkyuKagen);
   data.teate = data.teate ? '手当を含む' : null;
   data.jikyuKagenComma = digit3Comma(data.jikyuKagen);
 
   data.saishuGakureki = labelAssign(data.saishuGakureki, educationTypes, educationTypeLabels);
-  data.shinchakuKyujin = data.shinchakuKyujin ? '新着求人のみ表示する' : null;
-  data.hakenUkeoiNozoku = data.hakenUkeoiNozoku ? '派遣・請け負いを除く' : null;
-  data.zennendoSotsugyo = data.zennendoSotsugyo ? '既卒応募可能のみ表示する' : null;
+
+  data.hakenNozoku = data.hakenUkeoi.indexOf("3") != -1
+  data.ukeoiNozoku = data.hakenUkeoi.indexOf("4") != -1
 
   data.created = format(data.created);
+
+  console.log(JSON.stringify(data))
 
   return $('#templateSavedSearches').render(data);
 };
@@ -336,37 +334,13 @@ $(function() {
   </p>
   <p class="itemControls" style="float: right;"><span class="restoreSearchBtn" searchid="{{:id}}">この条件を使う</span><br /><span class="deleteSearchBtn" searchid="{{:id}}">この条件を削除</span></p>
   <p><span class="label">求人種類</span> {{:kyujinShurui}}</p>
-  <p><span class="label">職種</span> {{:kiboShokushu}}</p>
-  <p><span class="label">産業</span> {{:kiboSangyo}}</p>
-  {{if todofuken1 != null && todofuken1 != ''}}
-    <p><span class="label">都道府県１</span> {{:todofuken1}}</p>
+  <p><span class="label">職種</span> {{:kiboShokushu1}}</p>
+  <p><span class="label">産業</span> {{:kiboSangyo1}}</p>
+  {{if todofuken != null && todofuken != ''}}
+    <p><span class="label">都道府県</span> {{:todofuken}}</p>
   {{/if}}
   {{if chiku1 != null && chiku1 != ''}}
-    <p><span class="label">地区１</span> {{:chiku1}}</p>
-  {{/if}}
-  {{if todofuken2 != null && todofuken2 != ''}}
-    <p><span class="label">都道府県２</span> {{:todofuken2}}</p>
-  {{/if}}
-  {{if chiku2 != null && chiku2 != ''}}
-    <p><span class="label">地区２</span> {{:chiku2}}</p>
-  {{/if}}
-  {{if todofuken3 != null && todofuken3 != ''}}
-    <p><span class="label">都道府県３</span> {{:todofuken3}}</p>
-  {{/if}}
-  {{if chiku3 != null && chiku3 != ''}}
-    <p><span class="label">地区３</span> {{:chiku3}}</p>
-  {{/if}}
-  {{if todofuken4 != null && todofuken4 != ''}}
-    <p><span class="label">都道府県４</span> {{:todofuken4}}</p>
-  {{/if}}
-  {{if chiku4 != null && chiku4 != ''}}
-    <p><span class="label">地区４</span> {{:chiku4}}</p>
-  {{/if}}
-  {{if todofuken5 != null && todofuken5 != ''}}
-    <p><span class="label">都道府県５</span> {{:todofuken5}}</p>
-  {{/if}}
-  {{if chiku5 != null && chiku5 != ''}}
-    <p><span class="label">地区５</span> {{:chiku5}}</p>
+    <p><span class="label">地区</span> {{:chiku1}}</p>
   {{/if}}
   {{if gekkyuKagen > 0}}
     <p>
@@ -386,13 +360,20 @@ $(function() {
     <p><span class="label">最終学歴</span> {{:saishuGakureki}}</p>
   {{/if}}
   {{if shinchakuKyujin}}
-    <p><span class="label">{{:shinchakuKyujin}}</span></p>
+    <p><span class="label">新着求人のみ表示する</span></p>
   {{/if}}
-  {{if hakenUkeoiNozoku}}
-    <p><span class="label">{{:hakenUkeoiNozoku}}</span></p>
+  {{if hakenNozoku || ukeoiNozoku}}
+    <p>
+    {{if hakenNozoku}}
+      <span class="label">派遣を除く</span>
+    {{/if}}
+    {{if ukeoiNozoku}}
+      <span class="label">請け負いを除く</span>
+    {{/if}}
+    </p>
   {{/if}}
   {{if zennendoSotsugyo}}
-    <p><span class="label">{{:zennendoSotsugyo}}</span></p>
+    <p><span class="label">既卒応募可能のみ表示する</span></p>
   {{/if}}
   {{if (kyushokuNumber1 != null && kyushokuNumber1 != '') || (kyushokuNumber2 != null && kyushokuNumber2 != '')}}
     <p><span class="label">求職番号</span> {{:kyushokuNumber1}}-{{:kyushokuNumber2}}</p>
