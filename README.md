@@ -1,4 +1,4 @@
-# HW v1.4.0
+# HW v1.4.1
 
 > The viewer app of www.hellowork.go.jp.
 
