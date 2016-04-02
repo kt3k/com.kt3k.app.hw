@@ -387,9 +387,17 @@ var requestSearchList = function(pageNumber) {
   window.data = JSON.parse(device.getJSONString());
   var data = window.data;
   var params = '?';
-  for (var i in data) {
-    if (data.hasOwnProperty(i)) {
-      params += '' + i + 'Hidden=' + encodeURIComponent(data[i]) + '&';
+  for (var key in data) {
+    if (data.hasOwnProperty(key)) {
+      var val = data[key]
+      if (val instanceof Array) {
+        for (var j = 0; j < val.length; j++) {
+          var eachVal = val[j]
+          params += key + 'Hidden=' + encodeURIComponent(eachVal) + '&'
+        }
+      } else {
+        params += key + 'Hidden=' + encodeURIComponent(val) + '&';
+      }
     }
   }
 

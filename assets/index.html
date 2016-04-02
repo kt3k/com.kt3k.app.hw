@@ -176,7 +176,7 @@ var getParamsFromForm = function() {
     kyushokuNumber1: $('input[name="kyushokuNumber1"]').val(),
     kyushokuNumber2: $('input[name="kyushokuNumber2"]').val(),
 
-    hakenUkeoiNozoku: $('input[name="hakenUkeoiNozoku"]:checked').val(),
+    hakenUkeoi: $('input[name="hakenUkeoi"]:checked').map(function () { return $(this).val(); }).toArray(),
     gekkyuKagen: $('input[name="gekkyuKagen"]').val(),
     teate: $('input[name="teate"]:checked').val(),
     jikyuKagen: $('input[name="jikyuKagen"]').val(),
@@ -224,7 +224,12 @@ var restoreFormByJSON = function(json) {
   onHwNumber1Edit(normNum(json.kyushokuNumber1));
   onHwNumber2Edit(normNum(json.kyushokuNumber2));
 
-  $('input[name="hakenUkeoiNozoku"]').val([json.hakenUkeoiNozoku]);
+  $('input[name="hakenUkeoi"]').each(function () {
+      var array = json.hakenUkeoi || [];
+      // hakenUkeoi に値があれば check を入れる
+      $(this).prop('checked', array.indexOf($(this).val()) != -1);
+  });
+
   onMonthIncomeEdit(normNum(json.gekkyuKagen));
   $('input[name="teate"]').val([json.teate]);
   onTimeIncomeEdit(normNum(json.jikyuKagen));
@@ -657,8 +662,13 @@ $(function() {
         <li>
           <div>
             <span class="radioLabel">
-              <input type="checkbox" id="inputExcludeHaken" name="hakenUkeoiNozoku" value="1" />
-              <label for="inputExcludeHaken">派遣・請け負いを除く</label>
+              <input type="checkbox" id="inputExcludeHaken" name="hakenUkeoi" value="3" />
+              <label for="inputExcludeHaken">派遣を除く</label>
+            </span>
+            &nbsp;&nbsp;
+            <span class="radioLabel">
+              <input type="checkbox" id="inputExcludeUkeoi" name="hakenUkeoi" value="4" />
+              <label for="inputExcludeUkeoi">請け負いを除く</label>
             </span>
           </div>
         </li>
