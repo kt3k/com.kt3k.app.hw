@@ -180,14 +180,14 @@ var getParamsFromForm = function() {
     gekkyuKagen: $('input[name="gekkyuKagen"]').val(),
     teate: $('input[name="teate"]:checked').val(),
     jikyuKagen: $('input[name="jikyuKagen"]').val(),
-    kiboShokushu: $('input[name="kiboShokushu"]').val(),
+    kiboShokushu1: $('input[name="kiboShokushu1"]').val(),
 
     todofuken: $('input[name="todofuken"]').val(),
     chiku1: $('input[name="chiku1"]').val(),
 
     nenrei: $('input[name="nenrei"]').val(),
     shinchakuKyujin: $('input[name="shinchakuKyujin"]:checked').val(),
-    kiboSangyo: $('input[name="kiboSangyo"]').val(),
+    kiboSangyo1: $('input[name="kiboSangyo1"]').val(),
 
     saishuGakureki: $('input[name="saishuGakureki"]').val(),
     zennendoSotsugyo: $('input[name="zennendoSotsugyo"]:checked').val(),
@@ -229,7 +229,7 @@ var restoreFormByJSON = function(json) {
   $('input[name="teate"]').val([json.teate]);
   onTimeIncomeEdit(normNum(json.jikyuKagen));
 
-  onJobTypeSelect(indexOf(jobTypes, json.kiboShokushu));
+  onJobType1Select(indexOf(jobTypes, json.kiboShokushu1));
 
   onPrefectureSelect(indexOf(prefectureTypes, json.todofuken));
 
@@ -238,7 +238,7 @@ var restoreFormByJSON = function(json) {
   onAgeEdit(normNum(json.nenrei));
   $('input[name="shinchakuKyujin"]').val([json.shinchakuKyujin]);
 
-  onCompanyTypeSelect(indexOf(companyTypes, json.kiboSangyo));
+  onCompanyType1Select(indexOf(companyTypes, json.kiboSangyo1));
 
   onEducationTypeSelect(indexOf(educationTypes, json.saishuGakureki));
   $('input[name="zennendoSotsugyo"]').val([json.zennendoSotsugyo]);
@@ -350,13 +350,13 @@ var selectDialog = function(dialogTitle, dataKey, values, labels, callbackName) 
   };
 };
 
-var onJobTypeSelect = selectHandler('#inputJobType', jobTypes, '#jobType', jobTypeLabels);
+var onJobType1Select = selectHandler('#inputJobType1', jobTypes, '#jobType1', jobTypeLabels);
 
-var showJobTypeSelect = selectDialog('職種を選択', 'kiboShokushu', jobTypes, jobTypeLabels, 'onJobTypeSelect');
+var showJobType1Select = selectDialog('職種を選択', 'kiboShokushu1', jobTypes, jobTypeLabels, 'onJobType1Select');
 
-var onCompanyTypeSelect = selectHandler('#inputCompanyType', companyTypes, '#companyType', companyTypeLabels);
+var onCompanyType1Select = selectHandler('#inputCompanyType1', companyTypes, '#companyType1', companyTypeLabels);
 
-var showCompanyTypeSelect = selectDialog('産業を選択', 'kiboSangyo', companyTypes, companyTypeLabels, 'onCompanyTypeSelect');
+var showCompanyType1Select = selectDialog('産業を選択', 'kiboSangyo1', companyTypes, companyTypeLabels, 'onCompanyType1Select');
 
 var onEducationTypeSelect = selectHandler('#inputEducationType', educationTypes, '#educationType', educationTypeLabels);
 
@@ -498,8 +498,8 @@ var onResult = function() {
 
 var setUpUIs = function() {
   /* bind events */
-  $("#jobType").bind('click', showJobTypeSelect);
-  $("#companyType").bind('click', showCompanyTypeSelect);
+  $("#jobType1").bind('click', showJobType1Select);
+  $("#companyType1").bind('click', showCompanyType1Select);
   $("#educationType").bind('click', showEducationTypeSelect);
   $('#prefecture').bind('click', showPrefectureSelect);
   $('#chiku1').bind('click', showChiku1Edit);
@@ -590,14 +590,14 @@ $(function() {
         </li>
         <li>
           <div>
-            職種：&nbsp;&nbsp;<span id="jobType" class="buttonLabel" style="width: 200px;">選択なし</span>
-            <input type="hidden" value="" id="inputJobType" name="kiboShokushu">
+            職種：&nbsp;&nbsp;<span id="jobType1" class="buttonLabel" style="width: 200px;">選択なし</span>
+            <input type="hidden" value="" id="inputJobType1" name="kiboShokushu1">
           </div>
         </li>
         <li>
           <div>
-            産業：&nbsp;&nbsp;<span id="companyType" class="buttonLabel" style="width: 200px;">選択なし</span>
-            <input type="hidden" value="" id="inputCompanyType" name="kiboSangyo">
+            産業：&nbsp;&nbsp;<span id="companyType1" class="buttonLabel" style="width: 200px;">選択なし</span>
+            <input type="hidden" value="" id="inputCompanyType1" name="kiboSangyo1">
           </div>
         </li>
         <li class="prefectureControl" style="display: block;">
