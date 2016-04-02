@@ -141,6 +141,7 @@
   <script type="text/javascript" src="./js/jquery.min.js"></script>
   <script type="text/javascript" src="./js/jsrender.js"></script>
   <script type="text/javascript" src="./js/storage.js"></script>
+  <script type="text/javascript" src="./js/util.js"></script>
   <script type="text/javascript">
 /** app settings **/
 
@@ -204,6 +205,9 @@ var labelAssign = function(key, values, labels) {
 };
 
 var itemHtml = function(data) {
+
+  util.updateOldSearchObject(data)
+
   data.kyujinShurui = labelAssign(data.kyujinShurui, workTypes, workTypeLabels);
   data.kiboShokushu1 = labelAssign(data.kiboShokushu1, jobTypes, jobTypeLabels);
   data.kiboSangyo1 = labelAssign(data.kiboSangyo1, companyTypes, companyTypeLabels);
@@ -215,12 +219,15 @@ var itemHtml = function(data) {
 
   data.saishuGakureki = labelAssign(data.saishuGakureki, educationTypes, educationTypeLabels);
 
-  data.hakenNozoku = data.hakenUkeoi.indexOf("3") != -1
-  data.ukeoiNozoku = data.hakenUkeoi.indexOf("4") != -1
+  if (data.hakenUkeoi instanceof Array && data.hakenUkeoi.indexOf("3") != -1) {
+    data.hakenNozoku = true
+  }
+
+  if (data.hakenUkeoi instanceof Array && data.hakenUkeoi.indexOf("4") != -1) {
+    data.ukeoiNozoku = true
+  }
 
   data.created = format(data.created);
-
-  console.log(JSON.stringify(data))
 
   return $('#templateSavedSearches').render(data);
 };
@@ -305,7 +312,7 @@ var init = function() {
 };
 
 $(function() {
-    init();
+  init();
 });
 
   </script>

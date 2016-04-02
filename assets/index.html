@@ -142,6 +142,7 @@
   </style>
   <script type="text/javascript" src="./js/jquery.min.js"></script>
   <script type="text/javascript" src="./js/storage.js"></script>
+  <script type="text/javascript" src="./js/util.js"></script>
   <script type="text/javascript">
 /** app settings **/
 
@@ -205,6 +206,9 @@ var restoreFormByStorage = function() {
 };
 
 var restoreFormByJSON = function(json) {
+
+  util.updateOldSearchObject(json)
+
   var normIndex = function(x) { return x < 0 ? 0 : x; };
 
   var indexOf = function(values, value) { return normIndex(values.indexOf(value)); };
