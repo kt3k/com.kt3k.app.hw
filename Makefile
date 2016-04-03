@@ -1,4 +1,4 @@
-.PHONY: debug release clean device-test device-install device-app-launch device-logcat
+.PHONY: debug release clean device-test device-install device-app-launch device-logcat avd
 
 debug: build.xml
 	ant debug
@@ -25,3 +25,6 @@ device-app-launch:
 
 device-logcat:
 	adb logcat -s *:E chromium
+
+avd:
+	android avd
