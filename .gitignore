@@ -1,3 +1,6 @@
+# npm
+/node_modules
+
 # built application files
 *.apk
 *.ap_
