@@ -10,7 +10,11 @@
 <div id="container">
   <div id="header">
     {{ file.frontMatter.title }}
-    <h6 style="position: absolute; right: 0; top: 0; font-size: x-small; line-height: 45px;"><a href="javascript:void(0);" onclick="device.openOptionsMenu();" style="display: block; padding: 0 10px 0 10px;">MENU</a></h6>
+    <h6 style="position: absolute; right: 0; top: 0; line-height: 45px;">
+      <a href="javascript:void(0);" onclick="device.openOptionsMenu();" style="display: block; padding: 0 10px 0 10px;">
+        <img src="./images/menu.svg" width="45" height="45" style="box-shadow: 0px 0px 2px hsl(105, 40%, 30%)"/>
+      </a>
+    </h6>
   </div>
   {{ contents }}
   <div id="footer">
