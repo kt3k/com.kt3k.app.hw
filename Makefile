@@ -1,18 +1,24 @@
 .PHONY: debug release clean device-test device-install device-app-launch device-logcat avd
 
+NPM_BIN=`npm bin`
+
 debug: build.xml
 	ant debug
 
-release: build.xml
+release: build.xml assets
 	ant release
 
 build.xml:
 	android update project -p ./ --name 'hw'
 
+assets:
+	$(NPM_BIN)/bulbo build
+
 clean: build.xml
 	ant clean
 	touch build.xml local.properties proguard-project.txt ant.properties .password
 	rm build.xml local.properties proguard-project.txt ant.properties .password
+	rm -rf assets
 
 device-test: device-install device-app-launch device-logcat
 	@echo
