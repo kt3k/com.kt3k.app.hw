@@ -2,6 +2,7 @@
 
 - switch to gradle
 - re-organize css
+- build js
 
 # DONE
 
