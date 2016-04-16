@@ -1,8 +1,6 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta />
+---
+title: 求人リスト(保存データ)
+---
   <style>
     * {
       margin: 0;
@@ -140,9 +138,6 @@
       box-shadow: 0px -1px 1px hsl(105,40%,30%);
     }
   </style>
-  <script type="text/javascript" src="./js/jquery.min.js"></script>
-  <script type="text/javascript" src="./js/jsrender.js"></script>
-  <script type="text/javascript" src="./js/storage.js"></script>
   <script type="text/javascript">
 /** app settings **/
 
@@ -249,13 +244,6 @@ $(function() {
 });
 
   </script>
-</head>
-<body>
-<div id="container">
-  <div id="header">
-    求人リスト(保存データ)
-    <h6 style="position: absolute; right: 0; top: 0; font-size: x-small; line-height: 45px;"><a href="javascript:void(0);" onclick="device.openOptionsMenu();" style="display: block; padding: 0 10px 0 10px;">MENU</a></h6>
-  </div>
   <div id="main">
     <div id="searchResult" style="-webkit-transition-duration: 800ms; z-index: 100; -webkit-backface-visibility: hidden; -webkit-transform-style: preserve-3d;">
       <p style="text-align: center;">
@@ -263,11 +251,6 @@ $(function() {
       </p>
     </div>
   </div>
-  <div id="footer">
-    © kt3k.com
-  </div>
-</div>
-
 
 <!-- templates -->
 <script type="text/x-jsrender" id="templateSavedJob">
@@ -306,7 +289,3 @@ $(function() {
     <a href="#" onclick="device.finish();"><span>戻る</span></a>
   </p>
 </script>
-
-
-</body>
-</html>

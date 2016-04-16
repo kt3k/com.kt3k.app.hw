@@ -1,8 +1,6 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta />
+---
+title: 保存した検索条件
+---
   <style>
     * {
       margin: 0;
@@ -138,10 +136,6 @@
       box-shadow: 0px -1px 1px hsl(105,40%,30%);
     }
   </style>
-  <script type="text/javascript" src="./js/jquery.min.js"></script>
-  <script type="text/javascript" src="./js/jsrender.js"></script>
-  <script type="text/javascript" src="./js/storage.js"></script>
-  <script type="text/javascript" src="./js/util.js"></script>
   <script type="text/javascript">
 /** app settings **/
 
@@ -316,22 +310,11 @@ $(function() {
 });
 
   </script>
-</head>
-<body>
-<div id="container">
-  <div id="header">
-    保存した検索条件
-    <h6 style="position: absolute; right: 0; top: 0; font-size: x-small; line-height: 45px;"><a href="javascript:void(0);" onclick="device.openOptionsMenu();" style="display: block; padding: 0 10px 0 10px;">MENU</a></h6>
-  </div>
-  <div id="main">
-    <div id="searchResult" style="-webkit-backface-visibility: hidden; -webkit-transition-duration: 800ms;">
-      <p style="text-align: center;">
-        <img src="./images/ajax-loader-green.gif" />
-      </p>
-    </div>
-  </div>
-  <div id="footer">
-    © kt3k.com
+<div id="main">
+  <div id="searchResult" style="-webkit-backface-visibility: hidden; -webkit-transition-duration: 800ms;">
+    <p style="text-align: center;">
+      <img src="./images/ajax-loader-green.gif" />
+    </p>
   </div>
 </div>
 <script type="text/x-jsrender" id="templateSavedSearches">
@@ -401,8 +384,3 @@ $(function() {
     <a href="#" onclick="device.finish();"><span>戻る</span></a>
   </p>
 </script>
-
-
-
-</body>
-</html>
