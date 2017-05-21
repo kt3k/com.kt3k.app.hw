@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/kt3k/com.kt3k.app.hw#readme",
   "devDependencies": {
-    "bulbo": "^6.5.0",
+    "bulbo": "^6.12.0",
     "gulp-front-matter": "^1.3.0",
     "gulp-wrap": "^0.13.0",
     "nunjucks": "^3.0.0"
